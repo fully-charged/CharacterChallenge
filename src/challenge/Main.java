@@ -2,6 +2,7 @@ package challenge;
 
 import challenge.character_manipulation.holder.CharacterArrayHolder;
 import challenge.character_manipulation.holder.factory.CharacterArrayHolderFactory;
+import challenge.character_manipulation.process.CharacterArrayProcessor;
 import challenge.character_manipulation.process.factory.CharacterArrayProcessorFactory;
 import challenge.character_manipulation.shifter.CharacterArrayShifter;
 import challenge.character_manipulation.shifter.factory.CharacterArrayShifterFactory;
@@ -22,13 +23,14 @@ public class Main{
         final StringInputSource input = StringInputSourceFactory.getDefaultInstance().get();
         final CharacterArrayHolderFactory holderFactory = CharacterArrayHolderFactory.getDefaultInstance();
         final CharacterArrayFromStringSupplier supplier = CharacterArrayFromStringSupplierFactory.getDefaultInstance().get();
+        final CharacterArrayShifter shifter = CharacterArrayShifterFactory.getDefaultInstance().get();
+        final CharacterArrayProcessor processor = CharacterArrayProcessorFactory.getDefaultInstance().get();
         final StringReader reader = StringReaderFactory.getDefaultInstance().get(output, input);
 
         final String string = reader.read();
         final char[] chars = supplier.get(string);
         final CharacterArrayHolder holder = holderFactory.get(chars);
-        final CharacterArrayShifter shifter = CharacterArrayShifterFactory.getDefaultInstance().get();
-        final CharacterTable table = CharacterArrayProcessorFactory.getDefaultInstance().get().process(holder, shifter);
+        final CharacterTable table = processor.process(holder, shifter);
         output.put("Original string: " + string);
         output.put(table.toString(" | "));
     }
